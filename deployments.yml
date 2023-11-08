@@ -78,7 +78,7 @@ spec:
   selector:
     run: app1
   type: NodePort
----  
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -92,7 +92,7 @@ spec:
   selector:
     run: app2
   type: NodePort
----  
+---
 apiVersion: v1
 kind: Service
 metadata:
