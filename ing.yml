@@ -1,0 +1,30 @@
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "testingress"
+  namespace: "default"
+spec:
+  defaultBackend:
+    service:
+      name: "app1"
+      port:
+        number: 80
+  rules:
+  - http:
+      paths:
+      - path: "/sales"
+        backend:
+          service:
+            name: "app2"
+            port:
+              number: 8080
+        pathType: "ImplementationSpecific"
+      - path: "/trng"
+        backend:
+          service:
+            name: "app3"
+            port:
+              number: 8080
+        pathType: "ImplementationSpecific"
+status:
+  loadBalancer: {}
