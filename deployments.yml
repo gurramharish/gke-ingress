@@ -1,1 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      run: app1
+  template:
+    metadata:
+      labels:
+        run: app1
+    spec:
+      containers:
+      - image: punitporwal07/apache4ingress:1.0
+        imagePullPolicy: IfNotPresent
+        name: app1
+        ports:
+        - containerPort: 80
+          protocol: TCP
 
+---		  
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      run: app2
+  template:
+    metadata:
+      labels:
+        run: app2
+    spec:
+      containers:
+      - image: gcr.io/google-samples/hello-app:1.0
+        imagePullPolicy: IfNotPresent
+        name: app2
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+---	  
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app3
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      run: app3
+  template:
+    metadata:
+      labels:
+        run: app3
+    spec:
+      containers:
+      - image: gcr.io/google-samples/hello-app:2.0
+        imagePullPolicy: IfNotPresent
+        name: app3
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1
+  namespace: default
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: app1
+  type: NodePort
+---  
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2
+  namespace: default
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: app2
+  type: NodePort
+---  
+apiVersion: v1
+kind: Service
+metadata:
+  name: app3
+  namespace: default
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: app3
+  type: NodePort
